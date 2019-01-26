@@ -5,9 +5,14 @@ using UnityEngine;
 public class RotateTowardPlayer : MonoBehaviour
 {
     public Transform target;
+
+    public string text;
+
     void Start()
     {
-        
+        if (text.Length <= 0) {
+            text = gameObject.name;
+        }
     }
 
     // Update is called once per frame

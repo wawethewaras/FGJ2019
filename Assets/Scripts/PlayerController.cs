@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
 
     public Image cursor;
+    public Text gameText;
 
     void Start()
     {
@@ -45,12 +46,17 @@ public class PlayerController : MonoBehaviour
         {
 
             cursor.color = Color.red;
+            gameText.text = hit.collider?.gameObject?.GetComponent<RotateTowardPlayer>().text;
+        }
 
+        else if (hitObj != null) {
+            cursor.color = Color.red;
+            gameText.text = hitObj?.GetComponent<RotateTowardPlayer>().text;
         }
         else
         {
             cursor.color = Color.green;
-
+            gameText.text = "";
         }
         if (Input.GetMouseButton(0))
         {

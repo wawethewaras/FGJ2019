@@ -43,16 +43,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 10) && hit.collider.gameObject.tag == "carryObject")
         {
-            if (Input.GetMouseButtonDown(0))
-            {
 
-                if (grabObj == false)
-                {
-                    hitObj = hit.collider.gameObject;
-                    grabObj = true;
-                }
-
-            }
             cursor.color = Color.red;
 
         }
@@ -61,24 +52,30 @@ public class PlayerController : MonoBehaviour
             cursor.color = Color.green;
 
         }
-        if (grabObj && Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
+            if (hitObj == null)
+            {
+                hitObj = hit.collider?.gameObject?.GetComponent<Rigidbody>();
 
-            //Vector3 movementDirection = new Vector3(holder.transform.position.x - hitObj.transform.position.x, holder.transform.position.x - hitObj.transform.position.x, holder.transform.position.x - hitObj.transform.position.x);
-            hitObj.transform.position = holder.transform.position;
+            }
+            else {
+                //hitObj.transform.position = holder.transform.position;
+                Vector3 movementDirection = new Vector3(holder.transform.position.x - hitObj.transform.position.x, holder.transform.position.y - hitObj.transform.position.y, holder.transform.position.z - hitObj.transform.position.z);
+                hitObj.velocity = movementDirection* 10;
+                //hitObj.useGravity = false;
+            }
 
         }
-        else
+        else if (hitObj != null)
         {
-            grabObj = false;
-
+            hitObj = null;
         }
 
     }
 
 
-    private bool grabObj = false;
-    public GameObject hitObj;
+    public Rigidbody hitObj;
     public RaycastHit hit;
 
     public float sensitivityX = 15F;

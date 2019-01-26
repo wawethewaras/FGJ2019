@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FollowPlayerItem : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            transform.SetParent(other.transform);
-        }
+
+    public Transform target;
+    public Rigidbody myRigidbody;
+
+    void Update() {
+        Vector3 direction = target.position - transform.position;
+        myRigidbody.velocity = direction * Time.deltaTime*10;
     }
 }

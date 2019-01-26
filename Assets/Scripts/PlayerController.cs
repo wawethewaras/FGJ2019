@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,12 @@ public class PlayerController : MonoBehaviour
     private int movementSpeed;
 
     public float MouseSensitivity;
+
+
+    public GameObject holder;
+
+
+    public Image cursor;
 
     void Start()
     {
@@ -33,7 +40,46 @@ public class PlayerController : MonoBehaviour
         rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
         Head.transform.localEulerAngles = new Vector3(rotationY, rotationX, 0);
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 10) && hit.collider.gameObject.tag == "carryObject")
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+
+                if (grabObj == false)
+                {
+                    hitObj = hit.collider.gameObject;
+                    grabObj = true;
+                }
+
+            }
+            cursor.color = Color.red;
+
+        }
+        else
+        {
+            cursor.color = Color.green;
+
+        }
+        if (grabObj && Input.GetMouseButton(0))
+        {
+
+            //Vector3 movementDirection = new Vector3(holder.transform.position.x - hitObj.transform.position.x, holder.transform.position.x - hitObj.transform.position.x, holder.transform.position.x - hitObj.transform.position.x);
+            hitObj.transform.position = holder.transform.position;
+
+        }
+        else
+        {
+            grabObj = false;
+
+        }
+
     }
+
+
+    private bool grabObj = false;
+    public GameObject hitObj;
+    public RaycastHit hit;
 
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;

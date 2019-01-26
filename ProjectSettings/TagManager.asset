@@ -6,6 +6,7 @@ TagManager:
   tags:
   - hideObject
   - carryObject
+  - FoodCup
   layers:
   - Default
   - TransparentFX

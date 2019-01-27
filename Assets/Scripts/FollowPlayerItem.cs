@@ -9,7 +9,10 @@ public class FollowPlayerItem : MonoBehaviour
     public Rigidbody myRigidbody;
 
     void Update() {
-        Vector3 direction = target.position - transform.position;
-        myRigidbody.velocity = direction * Time.deltaTime*10;
+        if (Vector3.Distance(target.position, transform.position) >= 5) {
+            Vector3 direction = target.position - transform.position;
+            myRigidbody.velocity = direction * Time.deltaTime * 10;
+        }
+
     }
 }
